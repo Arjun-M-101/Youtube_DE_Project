@@ -20,6 +20,7 @@ The pipeline ingests raw JSON/CSV datasets, cleans and enriches them, computes d
 ---
 
 ## 📂 Project Structure
+```text
 YOUTUBE_DE_PROJECT/
 │
 ├── bronze/                  # Raw input data (JSON/CSV)
@@ -42,7 +43,7 @@ YOUTUBE_DE_PROJECT/
 ├── postgresql-42.4.7.jar   # JDBC driver for Spark → Postgres
 ├── requirements.txt        # Python dependencies
 └── venv_spark/             # Virtual environment
-
+```
 
 ---
 
