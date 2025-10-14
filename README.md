@@ -133,7 +133,7 @@ Used local directories for Bronze/Silver/Gold to keep setup simple. In productio
 - Postgres vs. Data Warehouse:
 Postgres is lightweight and easy to run locally. For enterprise scale, Redshift, Snowflake, or BigQuery would be more appropriate.
 - Airflow standalone vs. Managed Airflow:
-Standalone Airflow is quick to demo. In production, MWAA or Astronomer would handle scaling, logging, and monitoring.
+Standalone Airflow is quick to demo. In production, MWAA would handle scaling, logging, and monitoring.
 - Spark local vs. Spark cluster:
 Running Spark locally is enough for Kaggle‑sized datasets. For real YouTube‑scale data, Spark on EMR or Kubernetes would be required.
 - Dashboarding with Streamlit:
