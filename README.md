@@ -1,0 +1,139 @@
+# 📊 YouTube Data Engineering Pipeline (Batch Processing)
+
+## 🚀 Overview
+This project implements a **modern data engineering pipeline** for analyzing YouTube trending video data.  
+It demonstrates the **Medallion Architecture (Bronze → Silver → Gold)** using:
+
+- **Apache Airflow (3.x)** → Orchestration & scheduling  
+- **Apache Spark** → Scalable ETL transformations  
+- **Local filesystem** → Data lake layers (Bronze/Silver/Gold)  
+- **Postgres** → Serving layer for analytics  
+- **Streamlit + Altair (via SQLAlchemy)** → Interactive BI dashboard  
+
+The pipeline ingests raw JSON/CSV datasets, cleans and enriches them, computes derived metrics, and publishes analytics‑ready tables for visualization.
+
+---
+
+## 🏗️ Architecture
+<img width="1035" height="631" alt="image" src="https://github.com/user-attachments/assets/408fd933-5907-48be-a478-48c7a741e90e" />
+
+---
+
+## 📂 Project Structure
+YOUTUBE_DE_PROJECT/
+│
+├── bronze/                  # Raw input data (JSON/CSV)
+├── silver/                  # Cleaned, normalized data
+├── gold/                    # Aggregated, analytics-ready data
+│
+├── dags/
+│   └── youtube_pipeline_dag.py   # Airflow DAG definition
+│
+├── scripts/
+│   ├── json_to_silver.py         # Raw JSON → Silver layer
+│   ├── csv_to_silver.py          # Raw CSV → Silver layer
+│   ├── silver_to_gold.py         # Silver → Gold transformations
+│   ├── gold_to_postgres.py       # Load Gold into Postgres
+│   └── dashboard.py              # Streamlit + Altair dashboard
+│
+├── logs/                   # Airflow logs
+├── airflow.cfg             # Airflow config
+├── airflow.db              # Airflow metadata DB (SQLite for local)
+├── postgresql-42.4.7.jar   # JDBC driver for Spark → Postgres
+├── requirements.txt        # Python dependencies
+└── venv_spark/             # Virtual environment
+
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the repo
+```bash
+git clone https://github.com/<your-username>/YOUTUBE_DE_PROJECT.git
+cd YOUTUBE_DE_PROJECT
+```
+
+### 2. Create virtual environment
+```bash
+python3 -m venv venv_spark
+source venv_spark/bin/activate
+pip install -r requirements.txt
+```
+
+### 3. Initialize Airflow
+```bash
+airflow db migrate
+airflow standalone
+```
+
+This starts:
+- Scheduler
+- Webserver (http://localhost:8080)
+- Triggerer
+- Workers
+### 4. Place raw data
+- Drop Kaggle YouTube trending .csv files into bronze/raw_statistics/
+- Drop category .json files into bronze/raw_statistics_reference/
+  
+### 5. Trigger the DAG
+In the Airflow UI, enable and trigger youtube_pipeline.
+
+### 6. Launch the dashboard
+```bash
+streamlit run scripts/dashboard.py
+```
+
+### 🔄 Data Flow
+
+### **Bronze Layer (Raw Landing)**
+- Stores raw `.csv` and `.json` files.  
+- No transformations, just schema ingest and landing.  
+
+### **Silver Layer (Cleaned & Normalized)**
+- **`json_to_silver.py`**:  
+  - Explodes `items` array in JSON.  
+  - Extracts `id`, `category_name`.  
+  - Adds `region`.  
+- **`csv_to_silver.py`**:  
+  - Casts numeric fields (`views`, `likes`, `comment_count`, etc.).  
+  - Casts flags to boolean (`comments_disabled`, `ratings_disabled`, etc.).  
+  - Normalizes `publish_time` → timestamp, `trending_date` → date.  
+  - Adds `region`.  
+
+### **Gold Layer (Analytics-Ready)**
+- **`silver_to_gold.py`**:  
+  - Joins videos with categories.  
+  - Adds derived metric: `engagement_ratio = (likes + comment_count) / views`.  
+  - Adds `region`.  
+  - Unifies all regions into one dataset.  
+  - Partitioned by `region`.  
+
+### **Serving Layer**
+- **`gold_to_postgres.py`**:  
+  - Loads Gold dataset into Postgres table `videos_gold`.  
+- **`dashboard.py`**:  
+  - Streamlit + Altair visualizations:  
+    - Top categories by views  
+    - Views over time  
+    - Likes vs Comments scatter  
+    - Engagement ratio distribution  
+
+## ✅ Key Takeaways
+- Demonstrates Medallion Architecture (Bronze → Silver → Gold) with Spark.
+- Shows Airflow 3.x orchestration with modern DAG syntax.
+- Implements Spark → Postgres integration via JDBC.
+- Provides an interactive BI dashboard with Streamlit + Altair.
+- Fully reproducible locally, but designed with cloud mapping in mind (S3, EMR, MWAA, RDS/Redshift).
+
+## ⚖️ Trade‑offs & Design Decisions
+- Local filesystem vs. Cloud storage:
+Used local directories for Bronze/Silver/Gold to keep setup simple. In production, these would map to S3 buckets for scalability and durability.
+- Postgres vs. Data Warehouse:
+Postgres is lightweight and easy to run locally. For enterprise scale, Redshift, Snowflake, or BigQuery would be more appropriate.
+- Airflow standalone vs. Managed Airflow:
+Standalone Airflow is quick to demo. In production, MWAA or Astronomer would handle scaling, logging, and monitoring.
+- Spark local vs. Spark cluster:
+Running Spark locally is enough for Kaggle‑sized datasets. For real YouTube‑scale data, Spark on EMR or Kubernetes would be required.
+- Dashboarding with Streamlit:
+Streamlit is fast for prototyping and recruiter‑friendly. For enterprise BI, Superset, Tableau, or Power BI would be more scalable.
