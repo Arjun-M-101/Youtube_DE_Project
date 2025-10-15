@@ -72,14 +72,41 @@ This starts:
 - Webserver (http://localhost:8080)
 - Triggerer
 - Workers
+  
 ### 4. Place raw data
+👉 Dataset link: YouTube Trending Video Dataset on Kaggle
+https://www.kaggle.com/datasets/datasnaek/youtube-new
 - Drop Kaggle YouTube trending .csv files into bronze/raw_statistics/
 - Drop category .json files into bronze/raw_statistics_reference/
-  
-### 5. Trigger the DAG
+
+## 5. Postgres Setup
+- Install Postgres locally (e.g., brew install postgresql on macOS or package manager on Linux).  
+- Start Postgres service and create a database:
+   bash
+   createdb youtube_gold  
+- (Optional) Create a user if not using the default postgres:
+   bash
+   createuser --interactive --pwprompt  
+- Ensure the JDBC driver (postgresql-42.4.7.jar) is present in the project root (already included).
+
+## 6. Environment Variables
+For security, set Postgres credentials as environment variables:
+```bash
+export PGUSER=postgres
+export PGPASSWORD=your_password
+```
+These are automatically picked up by dashboard.py.
+
+## 7. Fresh Setup (optional)
+Before running the pipeline from scratch, clear old outputs:
+```bash
+python scripts/clear_outputs.py
+```
+
+### 8. Trigger the DAG
 In the Airflow UI, enable and trigger youtube_pipeline.
 
-### 6. Launch the dashboard
+### 9. Launch the dashboard
 ```bash
 streamlit run scripts/dashboard.py
 ```
