@@ -20,7 +20,7 @@ The pipeline ingests raw JSON/CSV datasets, cleans and enriches them, computes d
 
 ## 📂 Project Structure
 ```text
-YOUTUBE_DE_PROJECT/
+Youtube_DE_Project/
 │
 ├── bronze/                  # Raw input data (JSON/CSV)
 ├── silver/                  # Cleaned, normalized data
