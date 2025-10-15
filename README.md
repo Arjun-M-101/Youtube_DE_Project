@@ -50,8 +50,8 @@ YOUTUBE_DE_PROJECT/
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/<your-username>/YOUTUBE_DE_PROJECT.git
-cd YOUTUBE_DE_PROJECT
+git clone https://github.com/Arjun-M-101/Youtube_DE_ProjectT.git
+cd Youtube_DE_Project
 ```
 
 ### 2. Create virtual environment
