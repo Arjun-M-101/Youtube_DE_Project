@@ -89,7 +89,15 @@ https://www.kaggle.com/datasets/datasnaek/youtube-new
    ```bash
    createuser --interactive --pwprompt
    ```
-- Ensure the JDBC driver (postgresql-42.4.7.jar) is present in the project root (already included).
+- Ensure the JDBC driver (postgresql-42.4.7.jar) is present in the project root (already included).  
+👉 Always check Postgres status before running the pipeline:
+```bash
+sudo systemctl status postgresql
+```
+If Postgres is inactive, start it with:
+```
+sudo systemctl start postgresql
+```
 
 ## 6. Environment Variables
 For security, set Postgres credentials as environment variables:
@@ -100,7 +108,8 @@ export PGPASSWORD=your_password
 These are automatically picked up by dashboard.py.
 
 ## 7. Fresh Setup (optional)
-Before running the pipeline from scratch, clear old outputs:
+clear_outputs.py script can be used to reset the project state.
+Before running the pipeline from scratch, clear old outputs (if already present):
 ```bash
 python scripts/clear_outputs.py
 ```
