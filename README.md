@@ -58,8 +58,10 @@ Youtube_DE_Project/
     ```
 
 - Java (JDK 11 or higher) → required for PySpark   
+    ```bash
     sudo apt install -y openjdk-11-jdk
     java -version
+    ```
 
  - Apache Spark  
   - For local dev, installing pyspark via pip is enough.  
@@ -69,6 +71,7 @@ Youtube_DE_Project/
     tar xvf spark-3.4.1-bin-hadoop3.tgz
     mv spark-3.4.1-bin-hadoop3 ~/spark
     ```
+
   - Environment Variables for Spark
     ```bash
     export SPARK_HOME=~/spark
@@ -87,14 +90,17 @@ Youtube_DE_Project/
     ```bash
     sudo apt install -y postgresql postgresql-contrib libpq-dev
     ```
+
     👉 Always check Postgres status before running the pipeline:
     ```bash
     sudo systemctl status postgresql
     ```
+
     If Postgres is inactive, start it with:
     ```bash
     sudo systemctl start postgresql
     ```
+
    - Working with Postgres
 
     - Log into Postgres shell (psql):
@@ -108,6 +114,7 @@ Youtube_DE_Project/
       ```sql
       \l
       ```
+      
     - Create database:  
       ``sql
       CREATE DATABASE youtube_gold
