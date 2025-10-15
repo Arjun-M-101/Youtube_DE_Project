@@ -50,7 +50,7 @@ YOUTUBE_DE_PROJECT/
 
 ### 1. Clone the repo
 ```bash
-git clone https://github.com/Arjun-M-101/Youtube_DE_ProjectT.git
+git clone https://github.com/Arjun-M-101/Youtube_DE_Project.git
 cd Youtube_DE_Project
 ```
 
