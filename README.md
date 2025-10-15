@@ -47,22 +47,124 @@ Youtube_DE_Project/
 
 ---
 
+### 🛠️ Prerequisites & Installation
+
+## System Packages
+
+# - Python 3.10+  
+    ```bash
+    sudo apt update
+    sudo apt install -y python3 python3-venv python3-dev
+    ```
+
+# - Java (JDK 11 or higher) → required for PySpark   
+    ```bash
+    sudo apt install -y openjdk-11-jdk
+    java -version
+    ```
+
+# - Apache Spark  
+  - For local dev, installing pyspark via pip is enough.  
+  - For full CLI (spark-submit, spark-shell):  
+    ```bash
+    wget https://downloads.apache.org/spark/spark-3.4.1/spark-3.4.1-bin-hadoop3.tgz
+    tar xvf spark-3.4.1-bin-hadoop3.tgz
+    mv spark-3.4.1-bin-hadoop3 ~/spark
+    ```
+  - Environment Variables for Spark
+    ```bash
+    export SPARK_HOME=~/spark
+    export PATH=$SPARK_HOME/bin:$PATH
+    spark-shell --version
+    ```
+
+# - Apache Airflow (3.x)  
+    Installed via requirements.txt, but must be initialized manually:  
+    ```bash
+    airflow db migrate
+    airflow standalone
+    ```
+
+# - Postgres  
+    ```bash
+    sudo apt install -y postgresql postgresql-contrib libpq-dev
+    ```
+    👉 Always check Postgres status before running the pipeline:
+    ```bash
+    sudo systemctl status postgresql
+    ```
+    If Postgres is inactive, start it with:
+    ```bash
+    sudo systemctl start postgresql
+    ```
+  # - Working with Postgres
+
+    - Log into Postgres shell (psql):
+      ```bash
+      psql -U postgres -d youtube_gold
+      ```
+      
+      (If you set a different user, replace postgres with that username.)
+
+    - List all databases:
+      ```sql
+      \l
+      ```
+    - Create database:  
+      ``sql
+      CREATE DATABASE youtube_gold
+      ```
+
+    - Connect to a database:
+      ```sql
+      \c youtube_gold
+      ```
+
+    - List all tables:
+      ```sql
+      \dt
+      ```
+
+    - Run a sample query:
+      ```sql
+      SELECT * FROM youtube_gold LIMIT 10;
+      ```
+
+    - Exit psql:
+      ```sql
+      \q
+      ```
+
+  # - Environment Variables for postgres
+    For security, set Postgres credentials as environment variables:
+    ```bash
+    export PGUSER=postgres
+    export PGPASSWORD=your_password
+    ```
+    These are automatically picked up by dashboard.py.
+
+  # - JDBC Driver  
+    Already included (postgresql-42.4.7.jar). If missing:  
+    ```bash
+    wget https://jdbc.postgresql.org/download/postgresql-42.4.7.jar -P .
+    ```
+
 ## ⚙️ Setup Instructions
 
-### 1. Clone the repo
+### - Clone the repo
 ```bash
 git clone https://github.com/Arjun-M-101/Youtube_DE_Project.git
 cd Youtube_DE_Project
 ```
 
-### 2. Create virtual environment
+### - Create virtual environment
 ```bash
 python3 -m venv venv_spark
 source venv_spark/bin/activate
 pip install -r requirements.txt
 ```
 
-### 3. Initialize Airflow
+### - Initialize Airflow
 ```bash
 airflow db migrate
 airflow standalone
@@ -74,56 +176,29 @@ This starts:
 - Triggerer
 - Workers
   
-### 4. Place raw data
+### - Place raw data
 👉 Dataset link: YouTube Trending Video Dataset on Kaggle
 https://www.kaggle.com/datasets/datasnaek/youtube-new
 - Drop Kaggle YouTube trending .csv files into bronze/raw_statistics/
 - Drop category .json files into bronze/raw_statistics_reference/
 
-## 5. Postgres Setup
-- Install Postgres locally (e.g., brew install postgresql on macOS or package manager on Linux).  
-- Start Postgres service and create a database:
-   ```bash
-   createdb youtube_gold
-   ```  
-- (Optional) Create a user if not using the default postgres:
-   ```bash
-   createuser --interactive --pwprompt
-   ```
-- Ensure the JDBC driver (postgresql-42.4.7.jar) is present in the project root (already included).  
-👉 Always check Postgres status before running the pipeline:
-```bash
-sudo systemctl status postgresql
-```
-If Postgres is inactive, start it with:
-```
-sudo systemctl start postgresql
-```
 
-## 6. Environment Variables
-For security, set Postgres credentials as environment variables:
-```bash
-export PGUSER=postgres
-export PGPASSWORD=your_password
-```
-These are automatically picked up by dashboard.py.
-
-## 7. Fresh Setup (optional)
+### - Fresh Setup (optional)
 clear_outputs.py script can be used to reset the project state.
 Before running the pipeline from scratch, clear old outputs (if already present):
 ```bash
 python scripts/clear_outputs.py
 ```
 
-### 8. Trigger the DAG
+### - Trigger the DAG
 In the Airflow UI, enable and trigger youtube_pipeline.
 
-### 9. Launch the dashboard
+### - Launch the dashboard
 ```bash
 streamlit run scripts/dashboard.py
 ```
 
-### 10. Sample Outputs (Airflow + Dashboard)
+### - Sample Outputs (Airflow + Dashboard)
 <img width="1280" height="531" alt="Airflow DAG Success Example" src="https://github.com/user-attachments/assets/73af76cc-a09e-470c-a31d-d28eab01fbd2" />
 Airflow DAG Success Example
 
