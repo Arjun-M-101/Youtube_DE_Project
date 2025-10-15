@@ -15,7 +15,7 @@ The pipeline ingests raw JSON/CSV datasets, cleans and enriches them, computes d
 ---
 
 ## 🏗️ Architecture
-<img width="1137" height="607" alt="image" src="https://github.com/user-attachments/assets/6614ebdf-a8e7-449c-a554-155d6224dcb3" />
+<img width="1137" height="607" alt="Architecture Design" src="https://github.com/user-attachments/assets/6614ebdf-a8e7-449c-a554-155d6224dcb3" />
 ---
 
 ## 📂 Project Structure
@@ -122,6 +122,13 @@ In the Airflow UI, enable and trigger youtube_pipeline.
 ```bash
 streamlit run scripts/dashboard.py
 ```
+
+### 10. Sample Outputs (Airflow + Dashboard)
+<img width="1280" height="531" alt="Airflow DAG Success Example" src="https://github.com/user-attachments/assets/73af76cc-a09e-470c-a31d-d28eab01fbd2" />
+Airflow DAG Success Example
+
+<img width="1280" height="538" alt="Streamlit Dashboard Example" src="https://github.com/user-attachments/assets/4a08d018-1c98-437e-9adb-2e7dc1f10ad8" />
+Streamlit Dashboard Example
 
 ### 🔄 Data Flow
 
