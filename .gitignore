@@ -40,5 +40,5 @@ Thumbs.db
 .vscode/
 .idea/
 
-# requirements-local.txt
-requirements-local.txt
+# requirements-lock.txt
+requirements-lock.txt
