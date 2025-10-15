@@ -146,12 +146,12 @@ Youtube_DE_Project/
         export PGUSER=postgres
         export PGPASSWORD=your_password
         ```
-    These are automatically picked up by dashboard.py.
+      These are automatically picked up by dashboard.py.
 
     - JDBC Driver  
-      Already included (postgresql-42.4.7.jar). If missing:  
+      Already included (postgresql-42.7.4.jar). If missing:  
       ```bash
-      wget https://jdbc.postgresql.org/download/postgresql-42.4.7.jar -P .
+      wget https://jdbc.postgresql.org/download/postgresql-42.7.4.jar -P .
       ```
 
 ## ⚙️ Setup Instructions
