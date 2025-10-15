@@ -34,7 +34,8 @@ YOUTUBE_DE_PROJECT/
 │   ├── csv_to_silver.py          # Raw CSV → Silver layer
 │   ├── silver_to_gold.py         # Silver → Gold transformations
 │   ├── gold_to_postgres.py       # Load Gold into Postgres
-│   └── dashboard.py              # Streamlit + Altair dashboard
+│   ├── dashboard.py              # Streamlit + Altair dashboard
+│   └── clear_outputs.py          # Utility to clear old outputs
 │
 ├── logs/                   # Airflow logs
 ├── airflow.cfg             # Airflow config
