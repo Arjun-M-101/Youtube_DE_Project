@@ -1,4 +1,5 @@
 from pyspark.sql import SparkSession
+import os
 
 # Start Spark with JDBC driver
 spark = SparkSession.builder \
@@ -12,12 +13,15 @@ gold_path = "file:///home/arjun/youtube_de_project/gold"
 # Read Parquet dataset (Spark infers schema automatically)
 df = spark.read.parquet(gold_path)
 
+user = os.getenv("PGUSER")
+password = os.getenv("PGPASSWORD")
+
 # JDBC connection details
 jdbc_url = "jdbc:postgresql://localhost:5432/youtube_gold"
 table_name = "videos_gold"
 db_props = {
-    "user": "postgres",
-    "password": "password",
+    "user": user,
+    "password": password,
     "driver": "org.postgresql.Driver"
 }
 
