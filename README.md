@@ -52,8 +52,10 @@ Youtube_DE_Project/
 ## System Packages
 
  - Python 3.10+  
+    ```bash
     sudo apt update
     sudo apt install -y python3 python3-venv python3-dev
+    ```
 
 - Java (JDK 11 or higher) → required for PySpark   
     sudo apt install -y openjdk-11-jdk
