@@ -82,11 +82,13 @@ https://www.kaggle.com/datasets/datasnaek/youtube-new
 ## 5. Postgres Setup
 - Install Postgres locally (e.g., brew install postgresql on macOS or package manager on Linux).  
 - Start Postgres service and create a database:
-   bash
-   createdb youtube_gold  
+   ```bash
+   createdb youtube_gold
+   ```  
 - (Optional) Create a user if not using the default postgres:
-   bash
-   createuser --interactive --pwprompt  
+   ```bash
+   createuser --interactive --pwprompt
+   ```
 - Ensure the JDBC driver (postgresql-42.4.7.jar) is present in the project root (already included).
 
 ## 6. Environment Variables
