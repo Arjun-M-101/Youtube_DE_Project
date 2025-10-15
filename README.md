@@ -51,19 +51,15 @@ Youtube_DE_Project/
 
 ## System Packages
 
-# - Python 3.10+  
-    ```bash
+ - Python 3.10+  
     sudo apt update
     sudo apt install -y python3 python3-venv python3-dev
-    ```
 
-# - Java (JDK 11 or higher) → required for PySpark   
-    ```bash
+- Java (JDK 11 or higher) → required for PySpark   
     sudo apt install -y openjdk-11-jdk
     java -version
-    ```
 
-# - Apache Spark  
+ - Apache Spark  
   - For local dev, installing pyspark via pip is enough.  
   - For full CLI (spark-submit, spark-shell):  
     ```bash
@@ -78,14 +74,14 @@ Youtube_DE_Project/
     spark-shell --version
     ```
 
-# - Apache Airflow (3.x)  
+ - Apache Airflow (3.x)  
     Installed via requirements.txt, but must be initialized manually:  
     ```bash
     airflow db migrate
     airflow standalone
     ```
 
-# - Postgres  
+ - Postgres  
     ```bash
     sudo apt install -y postgresql postgresql-contrib libpq-dev
     ```
@@ -97,7 +93,7 @@ Youtube_DE_Project/
     ```bash
     sudo systemctl start postgresql
     ```
-  # - Working with Postgres
+   - Working with Postgres
 
     - Log into Postgres shell (psql):
       ```bash
@@ -135,7 +131,7 @@ Youtube_DE_Project/
       \q
       ```
 
-  # - Environment Variables for postgres
+   - Environment Variables for postgres
     For security, set Postgres credentials as environment variables:
     ```bash
     export PGUSER=postgres
@@ -143,7 +139,7 @@ Youtube_DE_Project/
     ```
     These are automatically picked up by dashboard.py.
 
-  # - JDBC Driver  
+   - JDBC Driver  
     Already included (postgresql-42.4.7.jar). If missing:  
     ```bash
     wget https://jdbc.postgresql.org/download/postgresql-42.4.7.jar -P .
