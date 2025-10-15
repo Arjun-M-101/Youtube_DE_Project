@@ -15,7 +15,7 @@ The pipeline ingests raw JSON/CSV datasets, cleans and enriches them, computes d
 ---
 
 ## 🏗️ Architecture
-<img width="1059" height="647" alt="image" src="https://github.com/user-attachments/assets/e30c9012-ee40-4288-84f6-04afe61b8c53" />
+<img width="1137" height="607" alt="image" src="https://github.com/user-attachments/assets/6614ebdf-a8e7-449c-a554-155d6224dcb3" />
 ---
 
 ## 📂 Project Structure
