@@ -64,27 +64,27 @@ Youtube_DE_Project/
     ```
 
  - Apache Spark  
-  - For local dev, installing pyspark via pip is enough.  
-  - For full CLI (spark-submit, spark-shell):  
-    ```bash
-    wget https://downloads.apache.org/spark/spark-3.4.1/spark-3.4.1-bin-hadoop3.tgz
-    tar xvf spark-3.4.1-bin-hadoop3.tgz
-    mv spark-3.4.1-bin-hadoop3 ~/spark
-    ```
+    For local dev, installing pyspark via pip is enough.  
+    For full CLI (spark-submit, spark-shell):  
+      ```bash
+      wget https://downloads.apache.org/spark/spark-3.4.1/spark-3.4.1-bin-hadoop3.tgz
+      tar xvf spark-3.4.1-bin-hadoop3.tgz
+      mv spark-3.4.1-bin-hadoop3 ~/spark
+      ```
 
-  - Environment Variables for Spark
-    ```bash
-    export SPARK_HOME=~/spark
-    export PATH=$SPARK_HOME/bin:$PATH
-    spark-shell --version
-    ```
+    Environment Variables for Spark
+      ```bash
+      export SPARK_HOME=~/spark
+      export PATH=$SPARK_HOME/bin:$PATH
+      spark-shell --version
+      ```
 
  - Apache Airflow (3.x)  
     Installed via requirements.txt, but must be initialized manually:  
-    ```bash
-    airflow db migrate
-    airflow standalone
-    ```
+      ```bash
+      airflow db migrate
+      airflow standalone
+      ```
 
  - Postgres  
     ```bash
@@ -92,88 +92,88 @@ Youtube_DE_Project/
     ```
 
     👉 Always check Postgres status before running the pipeline:
-    ```bash
-    sudo systemctl status postgresql
-    ```
+      ```bash
+      sudo systemctl status postgresql
+      ```
 
     If Postgres is inactive, start it with:
-    ```bash
-    sudo systemctl start postgresql
-    ```
+      ```bash
+      sudo systemctl start postgresql
+      ```
 
    - Working with Postgres
 
-    - Log into Postgres shell (psql):
-      ```bash
-      psql -U postgres -d youtube_gold
-      ```
+      Log into Postgres shell (psql):
+        ```bash
+        psql -U postgres -d youtube_gold
+        ```
       
       (If you set a different user, replace postgres with that username.)
 
-    - List all databases:
-      ```sql
-      \l
-      ```
-      
-    - Create database:  
-      ``sql
-      CREATE DATABASE youtube_gold
-      ```
+      List all databases:
+        ```sql
+        \l
+        ```
 
-    - Connect to a database:
-      ```sql
-      \c youtube_gold
-      ```
+      Create database:  
+        ```sql
+        CREATE DATABASE youtube_gold
+        ```
 
-    - List all tables:
-      ```sql
-      \dt
-      ```
+      Connect to a database:
+        ```sql
+        \c youtube_gold
+        ```
 
-    - Run a sample query:
-      ```sql
-      SELECT * FROM youtube_gold LIMIT 10;
-      ```
+      List all tables:
+        ```sql
+        \dt
+        ```
 
-    - Exit psql:
-      ```sql
-      \q
-      ```
+      Run a sample query:
+        ```sql
+        SELECT * FROM youtube_gold LIMIT 10;
+        ```
 
-   - Environment Variables for postgres
-    For security, set Postgres credentials as environment variables:
-    ```bash
-    export PGUSER=postgres
-    export PGPASSWORD=your_password
-    ```
+      Exit psql:
+        ```sql
+        \q
+        ```
+
+    - Environment Variables for postgres
+      For security, set Postgres credentials as environment variables:
+        ```bash
+        export PGUSER=postgres
+        export PGPASSWORD=your_password
+        ```
     These are automatically picked up by dashboard.py.
 
-   - JDBC Driver  
-    Already included (postgresql-42.4.7.jar). If missing:  
-    ```bash
-    wget https://jdbc.postgresql.org/download/postgresql-42.4.7.jar -P .
-    ```
+    - JDBC Driver  
+      Already included (postgresql-42.4.7.jar). If missing:  
+      ```bash
+      wget https://jdbc.postgresql.org/download/postgresql-42.4.7.jar -P .
+      ```
 
 ## ⚙️ Setup Instructions
 
 ### - Clone the repo
-```bash
-git clone https://github.com/Arjun-M-101/Youtube_DE_Project.git
-cd Youtube_DE_Project
-```
+  ```bash
+  git clone https://github.com/Arjun-M-101/Youtube_DE_Project.git
+  cd Youtube_DE_Project
+  ```
 
 ### - Create virtual environment
-```bash
-python3 -m venv venv_spark
-source venv_spark/bin/activate
-pip install -r requirements.txt
-```
+  ```bash
+  python3 -m venv venv_spark
+  source venv_spark/bin/activate
+  pip install -r requirements.txt
+  ```
 
 ### - Initialize Airflow
-```bash
-airflow db migrate
-airflow standalone
-```
+  ```bash
+  airflow db migrate
+  airflow standalone
+  ```
 
 This starts:
 - Scheduler
@@ -191,17 +191,17 @@ https://www.kaggle.com/datasets/datasnaek/youtube-new
 ### - Fresh Setup (optional)
 clear_outputs.py script can be used to reset the project state.
 Before running the pipeline from scratch, clear old outputs (if already present):
-```bash
-python scripts/clear_outputs.py
-```
+  ```bash
+  python scripts/clear_outputs.py
+  ```
 
 ### - Trigger the DAG
 In the Airflow UI, enable and trigger youtube_pipeline.
 
 ### - Launch the dashboard
-```bash
-streamlit run scripts/dashboard.py
-```
+  ```bash
+  streamlit run scripts/dashboard.py
+  ```
 
 ### - Sample Outputs (Airflow + Dashboard)
 <img width="1280" height="531" alt="Airflow DAG Success Example" src="https://github.com/user-attachments/assets/73af76cc-a09e-470c-a31d-d28eab01fbd2" />
