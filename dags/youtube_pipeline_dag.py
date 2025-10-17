@@ -1,7 +1,10 @@
 from airflow import DAG
 from airflow.providers.standard.operators.bash import BashOperator
-from datetime import datetime
 import pendulum
+import os
+
+home = os.path.expanduser("~")
+project_root = os.path.join(home, "youtube_de_project")
 
 default_args = {
     "owner": "arjun",
@@ -22,31 +25,31 @@ with DAG(
     # Task 1: JSON → Silver
     json_to_silver = BashOperator(
         task_id="json_to_silver",
-        bash_command="python /home/arjun/youtube_de_project/scripts/json_to_silver.py"
+        bash_command=f"{os.path.join(project_root, 'venv_spark', 'bin', 'python')} {os.path.join(project_root, 'scripts', 'json_to_silver.py')}"
     )
 
     # Task 2: CSV → Silver
     csv_to_silver = BashOperator(
         task_id="csv_to_silver",
-        bash_command="python /home/arjun/youtube_de_project/scripts/csv_to_silver.py"
+        bash_command=f"{os.path.join(project_root, 'venv_spark', 'bin', 'python')} {os.path.join(project_root, 'scripts', 'csv_to_silver.py')}"
     )
 
     # Task 3: Silver → Gold
     silver_to_gold = BashOperator(
         task_id="silver_to_gold",
-        bash_command="python /home/arjun/youtube_de_project/scripts/silver_to_gold.py"
+        bash_command=f"{os.path.join(project_root, 'venv_spark', 'bin', 'python')} {os.path.join(project_root, 'scripts', 'silver_to_gold.py')}"
     )
 
     # Task 4: Gold → Postgres
     gold_to_postgres = BashOperator(
         task_id="gold_to_postgres",
-        bash_command="python /home/arjun/youtube_de_project/scripts/gold_to_postgres.py"
+        bash_command=f"{os.path.join(project_root, 'venv_spark', 'bin', 'python')} {os.path.join(project_root, 'scripts', 'gold_to_postgres.py')}"
     )
 
     # Task 5: Dashboard
     dashboard = BashOperator(
         task_id="dashboard",
-        bash_command="python /home/arjun/youtube_de_project/scripts/dashboard.py"
+        bash_command=f"{os.path.join(project_root, 'venv_spark', 'bin', 'python')} {os.path.join(project_root, 'scripts', 'dashboard.py')}"
     )
 
     # Orchestration order

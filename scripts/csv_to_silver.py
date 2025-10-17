@@ -4,8 +4,11 @@ import os
 
 spark = SparkSession.builder.appName("CSV to Silver").getOrCreate()
 
-bronze_path = "/home/arjun/youtube_de_project/bronze/raw_statistics/"
-silver_path = "/home/arjun/youtube_de_project/silver/videos/"
+home = os.path.expanduser("~")
+project_root = os.path.join(home, "youtube_de_project")
+
+bronze_path = os.path.join(project_root, "bronze", "raw_statistics")
+silver_path = os.path.join(project_root, "silver", "videos")
 
 os.makedirs(silver_path, exist_ok=True)
 
@@ -15,7 +18,7 @@ for file in os.listdir(bronze_path):
         path = f"file://{os.path.join(bronze_path, file)}"
         df = spark.read.option("header", True).csv(path)
 
-        # Cast numeric columns properly
+        # Cast numeric and boolean columns properly
         df = df.withColumn("category_id", col("category_id").cast("int")) \
                .withColumn("views", col("views").cast("int")) \
                .withColumn("likes", col("likes").cast("int")) \
@@ -28,7 +31,6 @@ for file in os.listdir(bronze_path):
                .withColumn("publish_time", to_timestamp(col("publish_time"), "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")) \
                .withColumn("trending_date", to_date(col("trending_date"), "yy.dd.MM"))
 
-        
         out_file = f"file://{os.path.join(silver_path, f'{region}_videos.parquet')}"
         df.write.mode("overwrite").parquet(out_file)
         print(f"✅ Cleaned {file} → {out_file}")

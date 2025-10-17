@@ -5,8 +5,12 @@ import os
 spark = SparkSession.builder.appName("JSON to Silver").getOrCreate()
 spark.sparkContext.setLogLevel("WARN")
 
-bronze_path = "/home/arjun/youtube_de_project/bronze/raw_statistics_reference/"
-silver_path = "/home/arjun/youtube_de_project/silver/categories/"
+# Dynamic project root
+home = os.path.expanduser("~")
+project_root = os.path.join(home, "youtube_de_project")
+
+bronze_path = os.path.join(project_root, "bronze", "raw_statistics_reference")
+silver_path = os.path.join(project_root, "silver", "categories")
 os.makedirs(silver_path, exist_ok=True)
 
 for file in os.listdir(bronze_path):

@@ -1,14 +1,17 @@
 from pyspark.sql import SparkSession
 import os
 
+home = os.path.expanduser("~")
+project_root = os.path.join(home, "youtube_de_project")
+
 # Start Spark with JDBC driver
 spark = SparkSession.builder \
     .appName("Load Gold to Postgres") \
-    .config("spark.jars", "/home/arjun/youtube_de_project/postgresql-42.7.4.jar") \
+    .config("spark.jars", os.path.join(project_root, "postgresql-42.7.4.jar")) \
     .getOrCreate()
 
 # Path to unified Gold dataset
-gold_path = "file:///home/arjun/youtube_de_project/gold"
+gold_path = f"file://{os.path.join(project_root, 'gold')}"
 
 # Read Parquet dataset (Spark infers schema automatically)
 df = spark.read.parquet(gold_path)
@@ -29,7 +32,7 @@ db_props = {
 df.write.jdbc(
     url=jdbc_url,
     table=table_name,
-    mode="overwrite",   # replace table each run (use "append" if you want accumulation)
+    mode="overwrite",   # use "append" if you want accumulation
     properties=db_props
 )
 

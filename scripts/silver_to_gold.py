@@ -1,5 +1,6 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import lit
+import os
 
 # ----------------------------
 # Initialize Spark
@@ -11,11 +12,14 @@ spark = SparkSession.builder \
 # ----------------------------
 # Config paths
 # ----------------------------
+home = os.path.expanduser("~")
+project_root = os.path.join(home, "youtube_de_project")
+
 regions = ["CA", "DE", "KR", "FR", "RU", "JP", "MX", "IN", "US", "GB"]
 
-silver_videos_path = "file:///home/arjun/youtube_de_project/silver/videos/"
-silver_categories_path = "file:///home/arjun/youtube_de_project/silver/categories/"
-gold_path = "file:///home/arjun/youtube_de_project/gold/"
+silver_videos_path = f"file://{os.path.join(project_root, 'silver', 'videos')}/"
+silver_categories_path = f"file://{os.path.join(project_root, 'silver', 'categories')}/"
+gold_path = f"file://{os.path.join(project_root, 'gold')}"
 
 # ----------------------------
 # Collect all regional Gold DataFrames
